@@ -25,7 +25,11 @@ module ClientSideValidations::ActionView::Helpers
       @validators = {}
       # Order matters here. Rails mutates the options object
       script = client_side_form_settings(object, options)
-      form   = super(record_or_name_or_array, *(args << options), &proc)
+      if self.respond_to?(:form_for_without_haml)
+        form   = form_for_with_haml(record_or_name_or_array, *(args << options), &proc)
+      else
+        form   = super(record_or_name_or_array, *(args << options), &proc)
+      end
       # Because of the load order requirement above this sub is necessary
       # Would be nice to not do this
       script = insert_validators_into_script(script)
