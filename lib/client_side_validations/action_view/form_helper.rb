@@ -26,7 +26,7 @@ module ClientSideValidations::ActionView::Helpers
       # Order matters here. Rails mutates the options object
       script = client_side_form_settings(object, options)
       if self.respond_to?(:form_for_without_haml)
-        form   = form_for_with_haml(record_or_name_or_array, *(args << options), &proc)
+        form   = form_for_without_haml(record_or_name_or_array, *(args << options), &proc)
       else
         form   = super(record_or_name_or_array, *(args << options), &proc)
       end
