@@ -231,6 +231,8 @@ window.ClientSideValidations.validators =
           return if options.allow_blank == true and @presence(element, {message: options.messages.numericality})
           return options.messages.numericality
 
+        val = val.replace(new RegExp("\\#{ClientSideValidations.number_format.delimiter}",'g'),"").replace(new RegExp("\\#{ClientSideValidations.number_format.separator}",'g'),".")
+
         if options.only_integer and !/^[+-]?\d+$/.test(val)
           return options.messages.only_integer
 
@@ -251,7 +253,6 @@ window.ClientSideValidations.validators =
           else
             return
 
-          val = val.replace(new RegExp("\\#{ClientSideValidations.number_format.delimiter}",'g'),"").replace(new RegExp("\\#{ClientSideValidations.number_format.separator}",'g'),".")
           fn = new Function("return #{val} #{operator} #{check_value}")
           return options.messages[check] unless fn()
 

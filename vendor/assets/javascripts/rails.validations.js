@@ -325,6 +325,7 @@
           }
           return options.messages.numericality;
         }
+        val = val.replace(new RegExp("\\" + ClientSideValidations.number_format.delimiter, 'g'), "").replace(new RegExp("\\" + ClientSideValidations.number_format.separator, 'g'), ".");
         if (options.only_integer && !/^[+-]?\d+$/.test(val)) {
           return options.messages.only_integer;
         }
@@ -348,7 +349,6 @@
           } else {
             return;
           }
-          val = val.replace(new RegExp("\\" + ClientSideValidations.number_format.delimiter, 'g'), "").replace(new RegExp("\\" + ClientSideValidations.number_format.separator, 'g'), ".");
           fn = new Function("return " + val + " " + operator + " " + check_value);
           if (!fn()) {
             return options.messages[check];
